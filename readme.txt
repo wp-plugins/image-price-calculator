@@ -1,5 +1,5 @@
 === Image Price Calculator ===
-Contributors: javiromera, premiumbizthemes
+Contributors: javiromera, bernardoluque, premiumbizthemes
 Donate e-mail: 
 Tags: order estimate form, order form, price calculator, price calculator form, simple price calculator, select and see different images
 Requires at least: 3.8
@@ -10,8 +10,9 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-Image Price Calculator is a fork from the WordPress plugin Simple Price Calculator, that allows you to create a price calculation form and add images. You can
-use it to provide instant price quotes or estimates on products and services for your visitors. A total can be displayed dynamically within your page. 
+Image Price Calculator is a fork from the WordPress plugin Simple Price Calculator, that allows you to create a price calculation form, add images, and
+the product can be integrated with woocommerce. You can use it to provide instant price quotes or estimates on products and services for your visitors. 
+A total can be displayed dynamically within your page. 
 Also can select and show different images for products.
 
 = Key Features =
@@ -21,7 +22,7 @@ Also can select and show different images for products.
 -  Easy to customize text/pricing via html
 -  Easy to customize images via html, only you have to put the same name for the image and the  
 	(checkboxes, radio buttons and select options) id name.
-
+-  Option to Integrate with woocommerce.
 
 == Installation ==
 
@@ -60,8 +61,9 @@ Ex: <input type="checkbox" id="nameImage1" value="14"> or <input type="radio" id
 	   <option id="nameImage3" value="5">Option1</option>
 	   <option id="nameImage4" value="11">Option1</option>
 
-Note: The images have to be .png
-
+Note: The images are superimposed, so the background must be transparent.
+      The images have to be .png
+      For the CSS, the images are from the "imgClass" class
 
 == Screenshots ==
 

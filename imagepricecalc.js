@@ -3,7 +3,7 @@
   $.fn.ImagePriceCalc= function () {      
 		
 // Initialize Variables
-
+    
 	var total=0;
 	var child=this.children(); 	
 	this.addClass("image-price-calc");	
@@ -12,7 +12,67 @@
 	$('#selextra2 > option[value="0"]').attr('selected', 'selected');
 	$("input:checkbox").prop('checked', false);
 	$("#noneradio").attr('checked', true);
-	InitialUpdate();	
+    
+	$("#spinner").hide();
+
+	InitialUpdate();
+
+
+
+	
+
+    $("#btnCarro").on('click',function() {
+
+        $("#spinner").show();
+        $("#btnCarro").hide();
+        
+
+        opcionesaux = [];
+        
+	    $('select option:selected[value!="0"]').each(function () {
+	   	    opcionesaux = opcionesaux + $(this).text();			
+	    });
+
+	    $("input:checked[type='checkbox']").each(function () {
+	   	    opcionesaux = opcionesaux + $(this).next("label").text();
+	   	    
+	    });
+
+	    $("input:checked[type='radio']").each(function () {
+	   	    opcionesaux = opcionesaux + $(this).next("label").text();			
+	    });
+		
+		
+		
+
+        
+		params = { opciones : opcionesaux,
+		           precioTotal : total};
+		str = jQuery.param( params );
+		
+		$.ajax({
+			//dataType: 'json',
+			url: 'wp-content/plugins/Image-price-calculator/addproduct.php',
+			type: 'POST',
+			async: true,
+			data: str,
+			statusCode: {
+				200: function() {
+				$("#spinner").hide();
+				$("#btnCarro").show();
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError){
+			     alert(xhr);
+				 alert(thrownError);
+			}
+		});
+
+	    
+	   
+	})
+
+
 	
 	$(".image-price-calc").append("<div id='marcoimagen'></div>");
 
@@ -89,7 +149,7 @@
 			if($(this).is(':checked')) {
 				var radioval= $(this).val();
 				if(($.isNumeric(radioval))&&(radioval!=0)) {				
-					$(this).attr('data-total', radioval);
+					sumaRadio = $(this).attr('data-total', radioval);
 					if (path != "selnone"){
 					$("#marcoimagen").append("<IMG id=im"+this.id+".png class='imgClass imradioClass' SRC=wp-content/plugins/image-price-calculator/"+path+"/"+this.id+".png </IMG>");
 					$(".imgClass").css({"width": "500px", "height": "475px","position": "absolute", "right": "50px" , "top":"250px"});
@@ -126,6 +186,8 @@
 			}					
 	
 		});
+
+
 	
 		
 		$(".image-price-calc input[type=radio]").each( function() {
@@ -175,11 +237,12 @@
 			   itemcost = $(this).attr("data-total") || 0;			   
 			}
 			total += parseFloat(itemcost);
-		});			
+		});
+
+				
 			    
-		$(".image-price-calc #image-price-total label").html($.number(total,2)+"€");		
-						
-		
+		$(".image-price-calc #image-price-total label").html($.number(total,2)+"€");
+	
 	}	
 		
 	this.append('<div id="sidebar"><div id="image-price-total"><h3 style="margin:0;"> Total: </h3><label id="image-price-total-num">' + $.number(total,2) + '€ </label></div> </div>');	
